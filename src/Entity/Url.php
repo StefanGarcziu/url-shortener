@@ -25,14 +25,6 @@ class Url
     private ?int $id = null;
 
     /**
-     * Short url.
-     *
-     * @var string|null
-     */
-    #[ORM\Column(length: 255)]
-    private ?string $shortUrl = null;
-
-    /**
      * Long url.
      *
      * @var string|null
@@ -67,27 +59,7 @@ class Url
     }
 
     /**
-     * Getter for short URL.
-     *
-     * @return string|null
-     */
-    public function getShortUrl(): ?string
-    {
-        return $this->shortUrl;
-    }
-
-    /**
-     * Setter for short URL.
-     *
-     * @param string $shortUrl Short URL
-     */
-    public function setShortUrl(string $shortUrl): void
-    {
-        $this->shortUrl = $shortUrl;
-    }
-
-    /**
-     * Getter
+     * Getter for long URL.
      *
      * @return string|null
      */
@@ -96,34 +68,53 @@ class Url
         return $this->longUrl;
     }
 
-    public function setLongUrl(string $longUrl): static
+    /**
+     * Setter for long URL.
+     *
+     * @param string $longUrl Long URL
+     */
+    public function setLongUrl(string $longUrl): void
     {
         $this->longUrl = $longUrl;
-
-        return $this;
     }
 
+    /**
+     * Getter for creation date.
+     *
+     * @return \DateTimeImmutable|null
+     */
     public function getCreationDate(): ?\DateTimeImmutable
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeImmutable $creationDate): static
+    /**
+     * Setter for creation date.
+     *
+     * @param \DateTimeImmutable $creationDate
+     */
+    public function setCreationDate(\DateTimeImmutable $creationDate): void
     {
         $this->creationDate = $creationDate;
-
-        return $this;
     }
 
+    /**
+     * Getter for modification date.
+     *
+     * @return \DateTimeImmutable|null
+     */
     public function getModDate(): ?\DateTimeImmutable
     {
         return $this->modDate;
     }
 
-    public function setModDate(\DateTimeImmutable $modDate): static
+    /**
+     * Setter for modification date.
+     *
+     * @param \DateTimeImmutable $modDate
+     */
+    public function setModDate(\DateTimeImmutable $modDate): void
     {
         $this->modDate = $modDate;
-
-        return $this;
     }
 }

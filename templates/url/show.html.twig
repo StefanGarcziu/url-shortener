@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.url_details'|trans({'%id%': url.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.url_details'|trans({'%id%': url.id|default('')}) }}</h1>
+    {% if url is defined and url|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ url.id }}</dd>
+            <dt>{{ 'label.long_url'|trans }}</dt>
+            <dd><a href="{{ url.longUrl }}" target="_blank">{{ url.longUrl }}</a></dd>
+            <dt>{{ 'label.short_url'|trans }}</dt>
+            <dd><a href="{{app.request.getSchemeAndHttpHost()}}/url/{{ url.id }}">{{app.request.getSchemeAndHttpHost()}}/url/{{ url.id }}</a></dd>
+            <dt>{{ 'label.creation_date'|trans }}</dt>
+            <dd>{{ url.creationDate|date('Y/m/d') }}</dd>
+            <dt>{{ 'label.mod_date'|trans }}</dt>
+            <dd>{{ url.modDate|date('Y/m/d') }}</dd>
+            <dt>{{ 'label.actions'|trans }}</dt>
+            <dd>
+                <a href="{{ url('url_redirect', {id: url.id }) }}" title="{{ 'action.go_to_url'|trans }}">
+                    {{ 'action.go_to'|trans }}
+                </a>
+            </dd>
+        </dl>
+        <p>
+            <a href="{{ url('url_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message.record_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}
