@@ -6,6 +6,9 @@
 
 {% block body %}
     <h1>{{ 'title.url_list'|trans }}</h1>
+    {% if filter is defined and filter|length %}
+        <h2>{{ 'info.sort_by_tag' }}: {{ filter.title }}</h2>
+    {% endif %}
     <a href="{{ url('url_create') }}" title="{{ 'action.create'|trans }}">
         {{ 'action.create'|trans }}
     </a>
@@ -39,7 +42,9 @@
                     <td>
                         {% if url[0].tags is defined and url[0].tags|length %}
                             {% for tag in url[0].tags %}
-                                {{ tag.title }}
+                                <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">
+                                    {{ tag.title }}
+                                </a>
                             {% endfor %}
                         {% else %}
                             -

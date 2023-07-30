@@ -5,6 +5,7 @@
 namespace App\Repository;
 
 use App\Entity\Click;
+use App\Entity\Tag;
 use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -48,19 +49,21 @@ class UrlRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
-                'url ',
+                'partial url.{id, longUrl, creationDate, modDate}',
                 'COUNT(clicks.id) as count',
                 'partial tags.{id, title}',
             )
-            ->leftJoin('url.tags', 'tags')
-            ->addGroupBy('tags')
             ->leftJoin('url.clicks', 'clicks')
-            ->addGroupBy('url')
+            ->leftJoin('url.tags', 'tags')
+            ->groupBy('url.id')
+            ->addGroupBy('tags')
             ->orderBy('count', "DESC");
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     /**
@@ -95,5 +98,23 @@ class UrlRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('url');
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder          $queryBuilder Query builder
+     * @param array<string, object> $filters      Filters array
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['tag']) && $filters['tag'] instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters['tag']);
+        }
+
+        return $queryBuilder;
     }
 }

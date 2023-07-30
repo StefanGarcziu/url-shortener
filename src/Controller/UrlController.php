@@ -11,6 +11,7 @@ use App\Form\Type\UrlType;
 use App\Repository\ClickRepository;
 use App\Repository\UrlRepository;
 use App\Service\ClickServiceInterface;
+use App\Service\TagServiceInterface;
 use App\Service\UrlServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,19 +43,23 @@ class UrlController extends AbstractController
     private TranslatorInterface $translator;
 
     /**
+     * Tag service.
+     */
+    private TagServiceInterface $tagService;
+
+    /**
      * Constructor.
      */
-    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService, TranslatorInterface $translator)
+    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService, TranslatorInterface $translator, TagServiceInterface $tagService)
     {
         $this->urlService = $urlService;
         $this->clickService = $clickService;
         $this->translator = $translator;
+        $this->tagService = $tagService;
     }
     
     /**
      * Index action.
-     *
-     * @param UrlRepository $urlRepository Url repository
      *
      * @return Response HTTP response
      */
@@ -62,15 +67,19 @@ class UrlController extends AbstractController
         name: 'url_index',
         methods: 'GET'
     )]
-    public function index(Request $request, UrlRepository $urlRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
+        $filters = $this->getFilters($request);
+        $tagFilterTitle = $this->tagService->findOneById($filters['tag_id']);
+
         $pagination = $this->urlService->getPaginatedList(
             $request->query->getInt('page', 1),
+            $filters
         );
 
         return $this->render(
             'url/index.html.twig',
-            ['pagination' => $pagination]
+            ['pagination' => $pagination, 'filter' =>  $tagFilterTitle ]
         );
     }
 
@@ -202,8 +211,7 @@ class UrlController extends AbstractController
     )]
     public function show(Request $request, Url $url): Response
     {
-        $this->clickService->registerClick($url, '123.123.123.123');
-//        $this->clickService->registerClick($url, $request->getClientIp());
+        $this->clickService->registerClick($url, $request->getClientIp());
 
         return $this->redirect($url->getLongUrl());
     }
@@ -227,5 +235,20 @@ class UrlController extends AbstractController
             'url/show.html.twig',
             ['url' => $url]
         );
+    }
+
+    /**
+     * Get filters from request.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return array<string, int> Array of filters
+     */
+    private function getFilters(Request $request): array
+    {
+        $filters = [];
+        $filters['tag_id'] = $request->query->getInt('filters_tag_id');
+
+        return $filters;
     }
 }
