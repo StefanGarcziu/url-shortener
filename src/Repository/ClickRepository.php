@@ -5,7 +5,6 @@
 namespace App\Repository;
 
 use App\Entity\Click;
-use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -54,6 +53,28 @@ class ClickRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->orderBy('click.date', 'DESC');
+    }
+
+    /**
+     * Save entity.
+     *
+     * @param Click $click Click entity
+     */
+    public function save(Click $click): void
+    {
+        $this->_em->persist($click);
+        $this->_em->flush();
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Click $click Click entity
+     */
+    public function delete(Click $click): void
+    {
+        $this->_em->remove($click);
+        $this->_em->flush();
     }
 
     /**

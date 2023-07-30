@@ -6,6 +6,9 @@
 
 {% block body %}
     <h1>{{ 'title.url_list'|trans }}</h1>
+    <a href="{{ url('url_create') }}" title="{{ 'action.create'|trans }}">
+        {{ 'action.create'|trans }}
+    </a>
     {% if pagination is defined and pagination.items|length %}
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
@@ -13,11 +16,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ 'label.id'|trans }}</th>
-                <th>{{ 'label.long_url' }}</th>
-                <th>{{ 'label.click_count'|trans }}</th>
-                <th>{{ 'label.creation_date'|trans }}</th>
-                <th>{{ 'label.mod_date'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'url.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.long_url'|trans, 'url.longUrl') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.click_count'|trans, 'count') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.creation_date'|trans, 'url.creationDate') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.mod_date'|trans, 'url.modDate') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -33,8 +36,17 @@
                         <a href="{{ url('url_redirect', {id: url[0].id}) }}" title="{{ 'action.go_to'|trans }}">
                             {{ 'action.go_to'|trans }}
                         </a>
+                        <br>
                         <a href="{{ url('url_show', {id: url[0].id}) }}" title="{{ 'action.details'|trans }}">
                             {{ 'action.details'|trans }}
+                        </a>
+                        <br>
+                        <a href="{{ url('url_edit', {id: url[0].id}) }}" title="{{ 'action.edit'|trans }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
+                        <br>
+                        <a href="{{ url('url_delete', {id: url[0].id}) }}" title="{{ 'action.delete'|trans }}">
+                            {{ 'action.delete'|trans }}
                         </a>
                     </td>
                 </tr>

@@ -7,6 +7,8 @@ namespace App\Entity;
 
 use App\Repository\ClickRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Click class.
@@ -21,7 +23,7 @@ class Click
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     /**
@@ -29,7 +31,9 @@ class Click
      *
      * @var \DateTimeImmutable|null
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'create')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $date = null;
 
     /**
@@ -38,9 +42,11 @@ class Click
      * @var string|null
      */
     #[ORM\Column(length: 255)]
+    #[Assert\Ip]
     private ?string $ip = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Url::class)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Url $url = null;
 
     /**

@@ -55,10 +55,31 @@ class UrlRepository extends ServiceEntityRepository
                 'url ',
                 'COUNT(clicks.id) as count'
             )
-            ->join('url.clicks', 'clicks')
+            ->leftJoin('url.clicks', 'clicks')
             ->groupBy('url')
             ->orderBy('count', "DESC");
+    }
 
+    /**
+     * Save entity.
+     *
+     * @param Url $url Url entity
+     */
+    public function save(Url $url): void
+    {
+        $this->_em->persist($url);
+        $this->_em->flush();
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Url $url Url entity
+     */
+    public function delete(Url $url): void
+    {
+        $this->_em->remove($url);
+        $this->_em->flush();
     }
 
     /**

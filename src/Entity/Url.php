@@ -8,6 +8,8 @@ namespace App\Entity;
 use App\Repository\UrlRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Url class.
@@ -22,7 +24,7 @@ class Url
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     /**
@@ -31,6 +33,8 @@ class Url
      * @var string|null
      */
     #[ORM\Column(length: 255)]
+    #[Assert\Url]
+    #[Assert\NotBlank]
     private ?string $longUrl = null;
 
     #[ORM\OneToMany(mappedBy: 'url', targetEntity: Click::class, fetch: 'EXTRA_LAZY')]
@@ -41,7 +45,9 @@ class Url
      *
      * @var \DateTimeImmutable|null
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'create')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $creationDate = null;
 
     /**
@@ -49,7 +55,9 @@ class Url
      *
      * @var \DateTimeImmutable|null
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'update')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $modDate = null;
 
     /**

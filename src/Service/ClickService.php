@@ -29,8 +29,6 @@ class ClickService implements ClickServiceInterface
 
     /**
      * Constructor.
-     *
-
      */
     public function __construct(UrlRepository $urlRepository, ClickRepository $clickRepository)
     {
@@ -38,9 +36,21 @@ class ClickService implements ClickServiceInterface
         $this->clickRepository = $clickRepository;
     }
 
-
-    public function registerClick(Url $url): Click
+    /**
+     * Register click.
+     *
+     * @param Url $url
+     * @param string $ip
+     *
+     * @return Click
+     */
+    public function registerClick(Url $url, string $ip): Click
     {
-       return new Click();
+        $click = new Click();
+        $click->setIp($ip);
+        $click->setUrl($url);
+        $this->clickRepository->save($click);
+
+        return new Click();
     }
 }

@@ -5,6 +5,7 @@
 
 namespace App\Service;
 
+use App\Entity\Url;
 use App\Repository\UrlRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,5 +51,25 @@ class UrlService implements UrlServiceInterface
             $page,
             UrlRepository::PAGINATOR_ITEMS_PER_PAGE
         );
+    }
+
+    /**
+     * Save entity.
+     *
+     * @param Url $url Url entity
+     */
+    public function save(Url $url): void
+    {
+        $this->urlRepository->save($url);
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Url $url Url
+     */
+    public function delete(Url $url): void
+    {
+        $this->urlRepository->delete($url);
     }
 }

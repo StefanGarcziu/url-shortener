@@ -7,15 +7,18 @@ namespace App\Controller;
 
 use App\Entity\Click;
 use App\Entity\Url;
+use App\Form\Type\UrlType;
 use App\Repository\ClickRepository;
 use App\Repository\UrlRepository;
 use App\Service\ClickServiceInterface;
 use App\Service\UrlServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class UrlController.
@@ -34,12 +37,18 @@ class UrlController extends AbstractController
     private ClickServiceInterface $clickService;
 
     /**
+     * Translator.
+     */
+    private TranslatorInterface $translator;
+
+    /**
      * Constructor.
      */
-    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService)
+    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService, TranslatorInterface $translator)
     {
         $this->urlService = $urlService;
         $this->clickService = $clickService;
+        $this->translator = $translator;
     }
     
     /**
@@ -66,6 +75,119 @@ class UrlController extends AbstractController
     }
 
     /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route(
+        '/create',
+        name: 'url_create',
+        methods: 'GET|POST',
+    )]
+    public function create(Request $request): Response
+    {
+        $url = new Url();
+        $form = $this->createForm(UrlType::class, $url);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->urlService->save($url);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('url_index');
+        }
+
+        return $this->render(
+            'url/create.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Url $url Url entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'url_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function edit(Request $request, Url $url): Response
+    {
+        $form = $this->createForm(
+            UrlType::class,
+            $url,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('url_edit', ['id' => $url->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->urlService->save($url);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('url_index');
+        }
+
+        return $this->render(
+            'url/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'url' => $url,
+            ]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Url $url Url entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'url_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Url $url): Response
+    {
+        $form = $this->createForm(FormType::class, $url, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('url_delete', ['id' => $url->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->urlService->delete($url);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('url_index');
+        }
+
+        return $this->render(
+            'url/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'url' => $url,
+            ]
+        );
+    }
+
+    /**
      * Show action.
      *
      * @param Url $url Url entity
@@ -78,13 +200,10 @@ class UrlController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
-    public function show(Url $url): Response
+    public function show(Request $request, Url $url): Response
     {
-//        $click = new Click();
-//        $click->setUrl($url);
-//        $click->setIp('123.123.123.123');
-//        $click->setDate(new \DateTimeImmutable('now'));
-//        $this->clickService->registerClick($url);
+        $this->clickService->registerClick($url, '123.123.123.123');
+//        $this->clickService->registerClick($url, $request->getClientIp());
 
         return $this->redirect($url->getLongUrl());
     }
