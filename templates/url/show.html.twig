@@ -20,10 +20,28 @@
             <dd>{{ url.creationDate|date('Y/m/d') }}</dd>
             <dt>{{ 'label.mod_date'|trans }}</dt>
             <dd>{{ url.modDate|date('Y/m/d') }}</dd>
+            <dt>{{ 'label.tags'|trans }}</dt>
+            <dd>
+                {% if url.tags is defined and url.tags|length %}
+                    {% for tag in url.tags %}
+                        {{ tag.title }}
+                    {% endfor %}
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
             <dt>{{ 'label.actions'|trans }}</dt>
             <dd>
                 <a href="{{ url('url_redirect', {id: url.id }) }}" title="{{ 'action.go_to_url'|trans }}">
                     {{ 'action.go_to'|trans }}
+                </a>
+                <br>
+                <a href="{{ url('url_edit', {id: url.id}) }}" title="{{ 'action.edit'|trans }}">
+                    {{ 'action.edit'|trans }}
+                </a>
+                <br>
+                <a href="{{ url('url_delete', {id: url.id}) }}" title="{{ 'action.delete'|trans }}">
+                    {{ 'action.delete'|trans }}
                 </a>
             </dd>
         </dl>

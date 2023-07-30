@@ -21,6 +21,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.click_count'|trans, 'count') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.creation_date'|trans, 'url.creationDate') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.mod_date'|trans, 'url.modDate') }}</th>
+                <th>{{ 'label.tags'|trans }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -28,10 +29,22 @@
             {% for url in pagination %}
                 <tr>
                     <td>{{ url[0].id }}</td>
-                    <td><a href="{{ url[0].longUrl }}" target="_blank">{{ url[0].longUrl }}</a> (<a href="{{app.request.getSchemeAndHttpHost()}}/url/{{ url[0].id }}">{{app.request.getSchemeAndHttpHost()}}/url/{{ url[0].id }}</a>)</td>
+                    <td><a href="{{ url[0].longUrl }}" target="_blank">{{ url[0].longUrl }}</a> (<a
+                                href="{{ app.request.getSchemeAndHttpHost() }}/url/{{ url[0].id }}">{{ app.request.getSchemeAndHttpHost() }}
+                            /url/{{ url[0].id }}</a>)
+                    </td>
                     <td>{{ url.count }}</td>
                     <td>{{ url[0].creationDate|date }}</td>
                     <td>{{ url[0].modDate|date }}</td>
+                    <td>
+                        {% if url[0].tags is defined and url[0].tags|length %}
+                            {% for tag in url[0].tags %}
+                                {{ tag.title }}
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{{ url('url_redirect', {id: url[0].id}) }}" title="{{ 'action.go_to'|trans }}">
                             {{ 'action.go_to'|trans }}

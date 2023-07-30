@@ -53,10 +53,13 @@ class UrlRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->select(
                 'url ',
-                'COUNT(clicks.id) as count'
+                'COUNT(clicks.id) as count',
+                'partial tags.{id, title}',
             )
+            ->leftJoin('url.tags', 'tags')
+            ->addGroupBy('tags')
             ->leftJoin('url.clicks', 'clicks')
-            ->groupBy('url')
+            ->addGroupBy('url')
             ->orderBy('count', "DESC");
     }
 

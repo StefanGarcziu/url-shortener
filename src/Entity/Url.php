@@ -6,6 +6,7 @@
 namespace App\Entity;
 
 use App\Repository\UrlRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -37,7 +38,13 @@ class Url
     #[Assert\NotBlank]
     private ?string $longUrl = null;
 
-    #[ORM\OneToMany(mappedBy: 'url', targetEntity: Click::class, fetch: 'EXTRA_LAZY')]
+    /**
+     * Clicks.
+     *
+     * @var Collection
+     */
+    #[ORM\OneToMany(mappedBy: 'url', targetEntity: Click::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
+    #[Assert\Valid]
     private Collection $clicks;
 
     /**
@@ -59,6 +66,24 @@ class Url
     #[Gedmo\Timestampable(on: 'update')]
     #[Assert\Type(\DateTimeImmutable::class)]
     private ?\DateTimeImmutable $modDate = null;
+
+    /**
+     * Tags.
+     *
+     * @var Collection
+     */
+    #[Assert\Valid]
+    #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
+    #[ORM\JoinTable(name: 'urls_tags')]
+    private Collection $tags;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Getter for id.
@@ -146,5 +171,35 @@ class Url
         $this->clicks = $clicks;
     }
 
+    /**
+     * Get tags.
+     *
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
 
+    /**
+     * Add tag.
+     *
+     * @param Tag $tag
+     */
+    public function addTag(Tag $tag): void
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+    }
+
+    /**
+     * Remove tag.
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag): void
+    {
+        $this->tags->removeElement($tag);
+    }
 }

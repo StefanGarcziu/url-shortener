@@ -5,7 +5,10 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Tag;
 use App\Entity\Url;
+use App\Form\DataTransformer\TagsDataTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +19,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UrlType extends AbstractType
 {
+    /**
+     * Tags data transformer.
+     *
+     * @var TagsDataTransformer
+     */
+    private TagsDataTransformer $tagsDataTransformer;
+
+    /**
+     * Constructor.
+     *
+     * @param TagsDataTransformer $tagsDataTransformer Tags data transformer
+     */
+    public function __construct(TagsDataTransformer $tagsDataTransformer)
+    {
+        $this->tagsDataTransformer = $tagsDataTransformer;
+    }
+
+
     /**
      * Builds the form.
      *
@@ -38,7 +59,35 @@ class UrlType extends AbstractType
                 'attr' => ['max_length' => 255],
             ]);
 
-        dump($builder);
+        $builder->add(
+            'tags',
+            EntityType::class,
+            [
+                'class' => Tag::class,
+                'choice_label' => function ($tag): string {
+                    return $tag->getTitle();
+                },
+                'label' => 'label.tags',
+                'placeholder' => 'label.none',
+                'required' => false,
+                'expanded' => true,
+                'multiple' => true,
+            ]
+        );
+
+        $builder->add(
+            'tags',
+            TextType::class,
+            [
+                'label' => 'label.tags',
+                'required' => false,
+                'attr' => ['max_length' => 128],
+            ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
+        );
     }
 
     /**
