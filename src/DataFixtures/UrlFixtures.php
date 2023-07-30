@@ -7,7 +7,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Url;
 use DateTimeImmutable;
-use Doctrine\Persistence\ObjectManager;
 
 /**
  * Class UrlFixtures.
@@ -19,7 +18,7 @@ class UrlFixtures extends AbstractBaseFixtures
      */
     public function loadData(): void
     {
-        for ($i = 0; $i < 100; ++$i) {
+        $this->createMany(100, 'urls', function (int $i) {
             $url = new Url();
             $url->setLongUrl($this->faker->url());
             $url->setCreationDate(
@@ -28,8 +27,8 @@ class UrlFixtures extends AbstractBaseFixtures
             $url->setModDate(
                 DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
             );
-            $this->manager->persist($url);
-        }
+            return $url;
+        });
 
         $this->manager->flush();
     }

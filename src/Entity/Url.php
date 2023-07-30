@@ -6,6 +6,7 @@
 namespace App\Entity;
 
 use App\Repository\UrlRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +32,9 @@ class Url
      */
     #[ORM\Column(length: 255)]
     private ?string $longUrl = null;
+
+    #[ORM\OneToMany(mappedBy: 'url', targetEntity: Click::class, fetch: 'EXTRA_LAZY')]
+    private Collection $clicks;
 
     /**
      * Creation date.
@@ -117,4 +121,22 @@ class Url
     {
         $this->modDate = $modDate;
     }
+
+    /**
+     * @return Collection
+     */
+    public function getClicks(): Collection
+    {
+        return $this->clicks;
+    }
+
+    /**
+     * @param Collection $clicks
+     */
+    public function setClicks(Collection $clicks): void
+    {
+        $this->clicks = $clicks;
+    }
+
+
 }

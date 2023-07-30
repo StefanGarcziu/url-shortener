@@ -5,9 +5,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Click;
 use App\Entity\Url;
+use App\Repository\ClickRepository;
 use App\Repository\UrlRepository;
+use App\Service\ClickServiceInterface;
+use App\Service\UrlServiceInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,6 +23,25 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/url')]
 class UrlController extends AbstractController
 {
+    /**
+     * Url service.
+     */
+    private UrlServiceInterface $urlService;
+
+    /**
+     * Click service.
+     */
+    private ClickServiceInterface $clickService;
+
+    /**
+     * Constructor.
+     */
+    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService)
+    {
+        $this->urlService = $urlService;
+        $this->clickService = $clickService;
+    }
+    
     /**
      * Index action.
      *
@@ -28,13 +53,15 @@ class UrlController extends AbstractController
         name: 'url_index',
         methods: 'GET'
     )]
-    public function index(UrlRepository $urlRepository): Response
+    public function index(Request $request, UrlRepository $urlRepository, PaginatorInterface $paginator): Response
     {
-        $urls = $urlRepository->findAll();
+        $pagination = $this->urlService->getPaginatedList(
+            $request->query->getInt('page', 1),
+        );
 
         return $this->render(
             'url/index.html.twig',
-            ['urls' => $urls]
+            ['pagination' => $pagination]
         );
     }
 
@@ -53,6 +80,12 @@ class UrlController extends AbstractController
     )]
     public function show(Url $url): Response
     {
+//        $click = new Click();
+//        $click->setUrl($url);
+//        $click->setIp('123.123.123.123');
+//        $click->setDate(new \DateTimeImmutable('now'));
+//        $this->clickService->registerClick($url);
+
         return $this->redirect($url->getLongUrl());
     }
 

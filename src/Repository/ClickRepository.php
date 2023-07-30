@@ -1,26 +1,28 @@
 <?php
 /**
- * Url repository.
+ * Click repository.
  */
 namespace App\Repository;
 
 use App\Entity\Click;
 use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Url repository class.
+ * Click repository class.
  *
- * @extends ServiceEntityRepository<Url>
+ * @extends ServiceEntityRepository<Click>
  *
- * @method Url|null find($id, $lockMode = null, $lockVersion = null)
- * @method Url|null findOneBy(array $criteria, array $orderBy = null)
- * @method Url[]    findAll()
- * @method Url[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Click|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Click|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Click[]    findAll()
+ * @method Click[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UrlRepository extends ServiceEntityRepository
+class ClickRepository extends ServiceEntityRepository
 {
     /**
      * Items per page.
@@ -40,7 +42,7 @@ class UrlRepository extends ServiceEntityRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Url::class);
+        parent::__construct($registry, Click::class);
     }
 
     /**
@@ -51,14 +53,7 @@ class UrlRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select(
-                'url ',
-                'COUNT(clicks.id) as count'
-            )
-            ->join('url.clicks', 'clicks')
-            ->groupBy('url')
-            ->orderBy('count', "DESC");
-
+            ->orderBy('click.date', 'DESC');
     }
 
     /**
@@ -70,6 +65,6 @@ class UrlRepository extends ServiceEntityRepository
      */
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
-        return $queryBuilder ?? $this->createQueryBuilder('url');
+        return $queryBuilder ?? $this->createQueryBuilder('click');
     }
 }
