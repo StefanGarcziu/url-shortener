@@ -93,8 +93,6 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ChangeUserDataType::class);
         $form->get('name')->setData($user->getName());
         $form->get('surname')->setData($user->getSurname());
-
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $oldPassword = $form->get('oldPassword')->getData();

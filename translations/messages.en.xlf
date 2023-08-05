@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="file.ext">
+    <body>
+        <trans-unit id="message.wrong_password">
+			<source>message.wrong_password</source>
+			<target>Wrong password</target>
+		</trans-unit>
+		<trans-unit id="message.user_data_updated">
+			<source>message.user_data_updated</source>
+			<target>User data updated</target>
+		</trans-unit>
+		<trans-unit id="message.created_successfully">
+			<source>message.created_successfully</source>
+			<target>Created successfully</target>
+		</trans-unit>
+		<trans-unit id="message.deleted_successfully">
+			<source>message.deleted_successfully</source>
+			<target>Deleted successfully</target>
+		</trans-unit>
+		<trans-unit id="nav.urls">
+			<source>nav.urls</source>
+			<target>Url list</target>
+		</trans-unit>
+		<trans-unit id="nav.user_edit">
+			<source>nav.user_edit</source>
+			<target>Edit user data</target>
+		</trans-unit>
+		<trans-unit id="action_logout">
+			<source>action_logout</source>
+			<target>logout</target>
+		</trans-unit>
+		<trans-unit id="action_login">
+			<source>action_login</source>
+			<target>login</target>
+		</trans-unit>
+		<trans-unit id="message.form_error">
+			<source>message.form_error</source>
+			<target>Error</target>
+		</trans-unit>
+		<trans-unit id="action.back_to_list">
+			<source>action.back_to_list</source>
+			<target>Back to list</target>
+		</trans-unit>
+		<trans-unit id="title.index">
+			<source>title.index</source>
+			<target>Home page</target>
+		</trans-unit>
+		<trans-unit id="title.url_details">
+			<source>title.url_details</source>
+			<target>Url #%id%</target>
+		</trans-unit>
+		<trans-unit id="label.id">
+			<source>label.id</source>
+			<target>ID</target>
+		</trans-unit>
+		<trans-unit id="label.long_url">
+			<source>label.long_url</source>
+			<target>Long url</target>
+		</trans-unit>
+		<trans-unit id="label.short_url">
+			<source>label.short_url</source>
+			<target>Shortened url</target>
+		</trans-unit>
+		<trans-unit id="label.added_by">
+			<source>label.added_by</source>
+			<target>Added by</target>
+		</trans-unit>
+		<trans-unit id="label.creation_date">
+			<source>label.creation_date</source>
+			<target>Date of creation</target>
+		</trans-unit>
+		<trans-unit id="label.mod_date">
+			<source>label.mod_date</source>
+			<target>Modification date</target>
+		</trans-unit>
+		<trans-unit id="label.tags">
+			<source>label.tags</source>
+			<target>Tags</target>
+		</trans-unit>
+		<trans-unit id="label.actions">
+			<source>label.actions</source>
+			<target>Actions</target>
+		</trans-unit>
+		<trans-unit id="action.go_to_url">
+			<source>action.go_to_url</source>
+			<target>Go to url</target>
+		</trans-unit>
+		<trans-unit id="action.go_to">
+			<source>action.go_to</source>
+			<target>Go to url</target>
+		</trans-unit>
+		<trans-unit id="action.edit">
+			<source>action.edit</source>
+			<target>Edit</target>
+		</trans-unit>
+		<trans-unit id="action.delete">
+			<source>action.delete</source>
+			<target>Delete</target>
+		</trans-unit>
+		<trans-unit id="message.record_not_found">
+			<source>message.record_not_found</source>
+			<target>Not found</target>
+		</trans-unit>
+		<trans-unit id="title.click_data">
+			<source>title.click_data</source>
+			<target>Clicks data</target>
+		</trans-unit>
+		<trans-unit id="label.date">
+			<source>label.date</source>
+			<target>Date</target>
+		</trans-unit>
+		<trans-unit id="label.ip_address">
+			<source>label.ip_address</source>
+			<target>IP address</target>
+		</trans-unit>
+		<trans-unit id="message.empty_list">
+			<source>message.empty_list</source>
+			<target>Empty list</target>
+		</trans-unit>
+		<trans-unit id="title.url_create">
+			<source>title.url_create</source>
+			<target>Shorten new url!</target>
+		</trans-unit>
+		<trans-unit id="action.save">
+			<source>action.save</source>
+			<target>Save</target>
+		</trans-unit>
+		<trans-unit id="title.url_list">
+			<source>title.url_list</source>
+			<target>Url list</target>
+		</trans-unit>
+		<trans-unit id="action.create">
+			<source>action.create</source>
+			<target>Shorten new url!</target>
+		</trans-unit>
+		<trans-unit id="label.click_count">
+			<source>label.click_count</source>
+			<target>Click count</target>
+		</trans-unit>
+		<trans-unit id="action.details">
+			<source>action.details</source>
+			<target>Details</target>
+		</trans-unit>
+		<trans-unit id="title.url_edit">
+			<source>title.url_edit</source>
+			<target>Edit</target>
+		</trans-unit>
+		<trans-unit id="title.url_delete">
+			<source>title.url_delete</source>
+			<target>Delete</target>
+		</trans-unit>
+		<trans-unit id="title.user_edit">
+			<source>title.user_edit</source>
+			<target>Edit user data</target>
+		</trans-unit>
+		<trans-unit id="info.you_are_logged_in_as">
+			<source>info.you_are_logged_in_as</source>
+			<target>You are logged in as</target>
+		</trans-unit>
+		<trans-unit id="info.sort_by_tag">
+			<source>info.sort_by_tag</source>
+			<target>Filtered by tag</target>
+		</trans-unit>
+		<trans-unit id="info.index_info">
+			<source>info.index_info</source>
+			<target>Web application to help you shorten urls! To shorten the url go to the url tab and click create.</target>
+		</trans-unit>
+		<trans-unit id="info.index_credentials">
+			<source>info.index_credentials</source>
+			<target>Sample admin credentials:</target>
+		</trans-unit>
+		<trans-unit id="title.sign_in">
+			<source>title.sign_in</source>
+			<target>Sign in</target>
+		</trans-unit>
+		<trans-unit id="label.email">
+			<source>label.email</source>
+			<target>Email</target>
+		</trans-unit>
+		<trans-unit id="label.password">
+			<source>label.password</source>
+			<target>Password</target>
+		</trans-unit>
+		<trans-unit id="label.old_password">
+			<source>label.old_password</source>
+			<target>Old password</target>
+		</trans-unit>
+		<trans-unit id="label.new_password">
+			<source>label.new_password</source>
+			<target>New password</target>
+		</trans-unit>
+		<trans-unit id="label.password_repeat">
+			<source>label.password_repeat</source>
+			<target>Repeat new password</target>
+		</trans-unit>
+		<trans-unit id="label.clicks">
+			<source>label.clicks</source>
+			<target>Number of clicks</target>
+		</trans-unit>
+		<trans-unit id="label.url_to_shorten">
+			<source>label.url_to_shorten</source>
+			<target>Url to shorten</target>
+		</trans-unit>
+		<trans-unit id="label.anonymous_user_email">
+			<source>label.anonymous_user_email</source>
+			<target>Your email</target>
+		</trans-unit>
+		<trans-unit id="action.sign_in">
+			<source>action.sign_in</source>
+			<target>sign in</target>
+		</trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -7,9 +7,9 @@
 {% block body %}
     <h1>{{ 'title.url_list'|trans }}</h1>
     {% if filter is defined and filter|length %}
-        <h2>{{ 'info.sort_by_tag' }}: {{ filter.title }}</h2>
+        <h2>{{ 'info.sort_by_tag'|trans }}: {{ filter.title }}</h2>
     {% endif %}
-    <a href="{{ url('url_create') }}" title="{{ 'action.create'|trans }}">
+    <a href="{{ url('url_create') }}" title="{{ 'action.create'|trans }}" class="mb-3 d-inline-block">
         {{ 'action.create'|trans }}
     </a>
     {% if pagination is defined and pagination.items|length %}
