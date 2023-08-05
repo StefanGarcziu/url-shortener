@@ -16,6 +16,8 @@
             <dd><a href="{{ url.longUrl }}" target="_blank">{{ url.longUrl }}</a></dd>
             <dt>{{ 'label.short_url'|trans }}</dt>
             <dd><a href="{{ url('url_redirect', {id: url.id}) }}">{{ url('url_redirect', {id: url.id}) }}</a></dd>
+            <dt>{{ 'label.added_by'|trans }}</dt>
+            <dd><a href="mailto:{{ url.anonymousUser.email }}">{{ url.anonymousUser.email }}</a></dd>
             <dt>{{ 'label.creation_date'|trans }}</dt>
             <dd>{{ url.creationDate|date('Y/m/d') }}</dd>
             <dt>{{ 'label.mod_date'|trans }}</dt>
@@ -53,6 +55,35 @@
     {% else %}
         <p>
             {{ 'message.record_not_found'|trans }}
+        </p>
+    {% endif %}
+    <h2>{{ 'title.click_data'|trans }}</h2>
+
+    {% if pagination is defined and pagination.items|length %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'click.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'click.date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.ip_address'|trans, 'click.ip') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for click in pagination %}
+                <tr>
+                    <td>{{ click.id }}</td>
+                    <td>{{ click.date|date }}</td>
+                    <td>{{ click.ip }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
 {% endblock %}

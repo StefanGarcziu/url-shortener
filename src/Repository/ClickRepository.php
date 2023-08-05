@@ -5,6 +5,7 @@
 namespace App\Repository;
 
 use App\Entity\Click;
+use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -53,6 +54,20 @@ class ClickRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->orderBy('click.date', 'DESC');
+    }
+
+    /**
+     * Query by url.
+     *
+     * @param Url $url Url
+     *
+     * @return QueryBuilder
+     */
+    public function queryByUrl(Url $url): QueryBuilder
+    {
+        return $this->queryAll()
+            ->andWhere('click.url = :url')
+            ->setParameter(':url', $url);
     }
 
     /**

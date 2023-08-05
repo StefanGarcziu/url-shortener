@@ -9,6 +9,7 @@ use App\Entity\Click;
 use App\Entity\Url;
 use App\Repository\ClickRepository;
 use App\Repository\UrlRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -28,12 +29,19 @@ class ClickService implements ClickServiceInterface
     private ClickRepository $clickRepository;
 
     /**
+     * Paginator.
+     */
+    private PaginatorInterface $paginator;
+
+
+    /**
      * Constructor.
      */
-    public function __construct(UrlRepository $urlRepository, ClickRepository $clickRepository)
+    public function __construct(UrlRepository $urlRepository, ClickRepository $clickRepository, PaginatorInterface $paginator)
     {
         $this->urlRepository = $urlRepository;
         $this->clickRepository = $clickRepository;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -52,5 +60,40 @@ class ClickService implements ClickServiceInterface
         $this->clickRepository->save($click);
 
         return new Click();
+    }
+
+    /**
+     * Get paginated list.
+     *
+     * @param int $page Page number
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
+    public function getPaginatedList(int $page): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->clickRepository->queryAll(),
+            $page,
+            ClickRepository::PAGINATOR_ITEMS_PER_PAGE,
+            ['wrap-queries' => true],
+        );
+    }
+
+    /**
+     * Get paginated list by url.
+     *
+     * @param int $page Page number
+     * @param Url $url  Url
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
+    public function getPaginatedListByUrl(int $page, Url $url): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->clickRepository->queryByUrl($url),
+            $page,
+            ClickRepository::PAGINATOR_ITEMS_PER_PAGE,
+            ['wrap-queries' => true],
+        );
     }
 }

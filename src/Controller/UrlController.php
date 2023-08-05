@@ -263,11 +263,16 @@ class UrlController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
-    public function details(Url $url): Response
+    public function details(Request $request, Url $url): Response
     {
+        $pagination = $this->clickService->getPaginatedListByUrl(
+            $request->query->getInt('page', 1),
+            $url
+        );
+
         return $this->render(
             'url/show.html.twig',
-            ['url' => $url]
+            ['url' => $url, 'pagination' => $pagination]
         );
     }
 
