@@ -41,7 +41,8 @@
                     <td>
                         {% if url[0].tags is defined and url[0].tags|length %}
                             {% for tag in url[0].tags %}
-                                <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">{{ tag.title }}</a>&nbsp;
+                                <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}"
+                                   title="{{ tag.title }}">{{ tag.title }}</a>&nbsp;
                             {% endfor %}
                         {% else %}
                             -
@@ -55,14 +56,16 @@
                         <a href="{{ url('url_show', {id: url[0].id}) }}" title="{{ 'action.details'|trans }}">
                             {{ 'action.details'|trans }}
                         </a>
-                        <br>
-                        <a href="{{ url('url_edit', {id: url[0].id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.edit'|trans }}
-                        </a>
-                        <br>
-                        <a href="{{ url('url_delete', {id: url[0].id}) }}" title="{{ 'action.delete'|trans }}">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <br>
+                            <a href="{{ url('url_edit', {id: url[0].id}) }}" title="{{ 'action.edit'|trans }}">
+                                {{ 'action.edit'|trans }}
+                            </a>
+                            <br>
+                            <a href="{{ url('url_delete', {id: url[0].id}) }}" title="{{ 'action.delete'|trans }}">
+                                {{ 'action.delete'|trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

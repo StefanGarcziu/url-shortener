@@ -16,6 +16,7 @@ use App\Service\ClickServiceInterface;
 use App\Service\TagServiceInterface;
 use App\Service\UrlServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,6 +152,7 @@ class UrlController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'url_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Url $url): Response
     {
         $form = $this->createForm(
@@ -202,6 +204,7 @@ class UrlController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'url_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Url $url): Response
     {
         $form = $this->createForm(FormType::class, $url, [
