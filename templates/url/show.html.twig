@@ -15,7 +15,7 @@
             <dt>{{ 'label.long_url'|trans }}</dt>
             <dd><a href="{{ url.longUrl }}" target="_blank">{{ url.longUrl }}</a></dd>
             <dt>{{ 'label.short_url'|trans }}</dt>
-            <dd><a href="{{app.request.getSchemeAndHttpHost()}}/url/{{ url.id }}">{{app.request.getSchemeAndHttpHost() }}/url/{{ url.id }}</a></dd>
+            <dd><a href="{{ url('url_redirect', {id: url.id}) }}">{{ url('url_redirect', {id: url.id}) }}</a></dd>
             <dt>{{ 'label.creation_date'|trans }}</dt>
             <dd>{{ url.creationDate|date('Y/m/d') }}</dd>
             <dt>{{ 'label.mod_date'|trans }}</dt>
@@ -24,9 +24,7 @@
             <dd>
                 {% if url.tags is defined and url.tags|length %}
                     {% for tag in url.tags %}
-                        <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">
-                            {{ tag.title }}
-                        </a>
+                        <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">{{ tag.title }}</a>&nbsp;
                     {% endfor %}
                 {% else %}
                     -

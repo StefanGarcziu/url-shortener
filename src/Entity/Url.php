@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Url class.
  */
 #[ORM\Entity(repositoryClass: UrlRepository::class)]
+#[ORM\Table(name: 'urls')]
 class Url
 {
     /**
@@ -76,6 +77,14 @@ class Url
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'urls_tags')]
     private Collection $tags;
+
+    /**
+     * Anonymous user.
+     *
+     * @var AnonymousUser|null
+     */
+    #[ORM\ManyToOne(targetEntity: AnonymousUser::class)]
+    private ?AnonymousUser $anonymousUser = null;
 
     /**
      * Constructor.
@@ -201,5 +210,17 @@ class Url
     public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
+    }
+
+    public function getAnonymousUser(): ?AnonymousUser
+    {
+        return $this->anonymousUser;
+    }
+
+    public function setAnonymousUser(?AnonymousUser $anonymousUser): static
+    {
+        $this->anonymousUser = $anonymousUser;
+
+        return $this;
     }
 }

@@ -33,8 +33,7 @@
                 <tr>
                     <td>{{ url[0].id }}</td>
                     <td><a href="{{ url[0].longUrl }}" target="_blank">{{ url[0].longUrl }}</a> (<a
-                                href="{{ app.request.getSchemeAndHttpHost() }}/url/{{ url[0].id }}">{{ app.request.getSchemeAndHttpHost() }}
-                            /url/{{ url[0].id }}</a>)
+                                href="{{ url('url_redirect', {id: url[0].id}) }}">{{ url('url_redirect', {id: url[0].id}) }}</a>)
                     </td>
                     <td>{{ url.count }}</td>
                     <td>{{ url[0].creationDate|date }}</td>
@@ -42,9 +41,7 @@
                     <td>
                         {% if url[0].tags is defined and url[0].tags|length %}
                             {% for tag in url[0].tags %}
-                                <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">
-                                    {{ tag.title }}
-                                </a>
+                                <a href="{{ url('url_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">{{ tag.title }}</a>&nbsp;
                             {% endfor %}
                         {% else %}
                             -

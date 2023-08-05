@@ -5,6 +5,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AnonymousUser;
 use App\Entity\Tag;
 use App\Entity\Url;
 use DateTimeImmutable;
@@ -40,6 +41,10 @@ class UrlFixtures extends AbstractBaseFixtures implements DependentFixtureInterf
                 $url->addTag($tag);
             }
 
+            /** @var AnonymousUser $anonymousUser */
+            $anonymousUser = $this->getRandomReference('anonymous_users');
+            $url->setAnonymousUser($anonymousUser);
+
             return $url;
         });
 
@@ -54,6 +59,6 @@ class UrlFixtures extends AbstractBaseFixtures implements DependentFixtureInterf
      */
     public function getDependencies(): array
     {
-        return [TagFixtures::class];
+        return [TagFixtures::class, AnonymousUserFixtures::class];
     }
 }

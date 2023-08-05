@@ -5,11 +5,13 @@
 
 namespace App\Controller;
 
+use App\Entity\AnonymousUser;
 use App\Entity\Click;
 use App\Entity\Url;
 use App\Form\Type\UrlType;
 use App\Repository\ClickRepository;
 use App\Repository\UrlRepository;
+use App\Service\AnonymousUserServiceInterface;
 use App\Service\ClickServiceInterface;
 use App\Service\TagServiceInterface;
 use App\Service\UrlServiceInterface;
@@ -48,14 +50,26 @@ class UrlController extends AbstractController
     private TagServiceInterface $tagService;
 
     /**
-     * Constructor.
+     * Anonymous user service.
      */
-    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService, TranslatorInterface $translator, TagServiceInterface $tagService)
+    private AnonymousUserServiceInterface $anonymousUserService;
+
+    /**
+     * Constructor.
+     *
+     * @param UrlServiceInterface           $urlService           Url service
+     * @param ClickServiceInterface         $clickService         Click service
+     * @param TranslatorInterface           $translator           Translator
+     * @param TagServiceInterface           $tagService           Tag service
+     * @param AnonymousUserServiceInterface $anonymousUserService Anonymous user service
+     */
+    public function __construct(UrlServiceInterface $urlService, ClickServiceInterface $clickService, TranslatorInterface $translator, TagServiceInterface $tagService, AnonymousUserServiceInterface $anonymousUserService)
     {
         $this->urlService = $urlService;
         $this->clickService = $clickService;
         $this->translator = $translator;
         $this->tagService = $tagService;
+        $this->anonymousUserService = $anonymousUserService;
     }
     
     /**
@@ -102,6 +116,16 @@ class UrlController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $anonymousUserEmail = $form->get('anonymousUser')->getData();
+            $user = $this->anonymousUserService->findOneByEmail($anonymousUserEmail);
+
+            if (null === $user) {
+                $user = new AnonymousUser();
+                $user->setEmail($anonymousUserEmail);
+                $this->anonymousUserService->save($user);
+            }
+
+            $url->setAnonymousUser($user);
             $this->urlService->save($url);
 
             $this->addFlash(
@@ -140,6 +164,16 @@ class UrlController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $anonymousUserEmail = $form->get('anonymousUser')->getData();
+            $user = $this->anonymousUserService->findOneByEmail($anonymousUserEmail);
+
+            if (null === $user) {
+                $user = new AnonymousUser();
+                $user->setEmail($anonymousUserEmail);
+                $this->anonymousUserService->save($user);
+            }
+
+            $url->setAnonymousUser($user);
             $this->urlService->save($url);
 
             $this->addFlash(

@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Click class.
  */
 #[ORM\Entity(repositoryClass: ClickRepository::class)]
+#[ORM\Table(name: 'clicks')]
 class Click
 {
     /**

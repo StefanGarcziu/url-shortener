@@ -10,6 +10,7 @@ use App\Entity\Url;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -88,6 +89,17 @@ class UrlType extends AbstractType
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
         );
+
+        $builder->add(
+        'anonymousUser',
+        EmailType::class,
+        [
+            'label' => 'label.anonymous_user_email',
+            'required' => true,
+            'attr' => ['max_length' => 255],
+            'mapped' => false,
+        ]
+    );
     }
 
     /**

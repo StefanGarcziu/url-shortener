@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Tag class.
  */
 #[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\Table(name: 'tags')]
 class Tag
 {
     /**
