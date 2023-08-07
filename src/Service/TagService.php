@@ -21,6 +21,8 @@ class TagService implements TagServiceInterface
 
     /**
      * Constructor.
+     *
+     * @param TagRepository $tagRepository Tag repository
      */
     public function __construct(TagRepository $tagRepository)
     {

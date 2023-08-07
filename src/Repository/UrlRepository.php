@@ -47,6 +47,8 @@ class UrlRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param array $filters Filters
+     *
      * @return QueryBuilder Query builder
      */
     public function queryAll(array $filters): QueryBuilder

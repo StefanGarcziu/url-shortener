@@ -48,7 +48,8 @@ class UrlService implements UrlServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int   $page    Page number
+     * @param array $filters Filters
      *
      * @return PaginationInterface<string, mixed> Paginated list
      *

@@ -72,7 +72,9 @@ class UrlController extends AbstractController
     /**
      * Index action.
      *
-     * @return Response HTTP response
+     * @param Request $request Request
+     *
+     * @return Response Response
      */
     #[Route(
         name: 'url_index',
@@ -232,9 +234,10 @@ class UrlController extends AbstractController
     /**
      * Show action.
      *
-     * @param Url $url Url entity
+     * @param Request $request Request
+     * @param Url     $url     Url
      *
-     * @return Response HTTP response
+     * @return Response Response
      */
     #[Route(
         '/{id}',
@@ -252,7 +255,8 @@ class UrlController extends AbstractController
     /**
      * Details action.
      *
-     * @param Url $url Url entity
+     * @param Request $request Request
+     * @param Url     $url     Url entity
      *
      * @return Response HTTP response
      */
