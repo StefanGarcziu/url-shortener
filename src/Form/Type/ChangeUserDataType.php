@@ -20,19 +20,19 @@ class ChangeUserDataType extends AbstractType
      * Build form.
      *
      * @param FormBuilderInterface $builder Builder
-     * @param array $options Options
+     * @param array                $options Options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
                 'required' => true,
-                'attr' => ['min_length' => 3, 'max_length' => 45,],
+                'attr' => ['min_length' => 3, 'max_length' => 45],
             ]);
         $builder
             ->add('surname', TextType::class, [
                 'required' => true,
-                'attr' => ['min_length' => 3, 'max_length' => 45,],
+                'attr' => ['min_length' => 3, 'max_length' => 45],
             ]);
         $builder
             ->add('oldPassword', PasswordType::class, [
@@ -44,7 +44,6 @@ class ChangeUserDataType extends AbstractType
                 'type' => PasswordType::class,
                 'required' => true,
                 'label' => 'label.new_password',
-
                 'first_options' => [
                     'attr' => ['min-length' => 6, 'max_length' => 4096],
                     'label' => 'label.new_password',

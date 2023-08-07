@@ -34,9 +34,9 @@ class UrlService implements UrlServiceInterface
     /**
      * Constructor.
      *
-     * @param UrlRepository      $urlRepository  Url repository
-     * @param PaginatorInterface $paginator      Paginator
-     * @param TagService         $tagService     Tag service
+     * @param UrlRepository      $urlRepository Url repository
+     * @param PaginatorInterface $paginator     Paginator
+     * @param TagService         $tagService    Tag service
      */
     public function __construct(UrlRepository $urlRepository, PaginatorInterface $paginator, TagService $tagService)
     {

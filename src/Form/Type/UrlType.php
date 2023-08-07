@@ -23,7 +23,7 @@ class UrlType extends AbstractType
     /**
      * Tags data transformer.
      *
-     * @var TagsDataTransformer
+     * @var TagsDataTransformer Transformer
      */
     private TagsDataTransformer $tagsDataTransformer;
 
@@ -36,7 +36,6 @@ class UrlType extends AbstractType
     {
         $this->tagsDataTransformer = $tagsDataTransformer;
     }
-
 
     /**
      * Builds the form.
@@ -58,7 +57,8 @@ class UrlType extends AbstractType
                 'label' => 'label.url_to_shorten',
                 'required' => true,
                 'attr' => ['max_length' => 255],
-            ]);
+            ]
+        );
 
         $builder->add(
             'tags',
@@ -86,20 +86,18 @@ class UrlType extends AbstractType
             ]
         );
 
-        $builder->get('tags')->addModelTransformer(
-            $this->tagsDataTransformer
-        );
+        $builder->get('tags')->addModelTransformer($this->tagsDataTransformer);
 
         $builder->add(
-        'anonymousUser',
-        EmailType::class,
-        [
-            'label' => 'label.anonymous_user_email',
-            'required' => true,
-            'attr' => ['max_length' => 255],
-            'mapped' => false,
-        ]
-    );
+            'anonymousUser',
+            EmailType::class,
+            [
+                'label' => 'label.anonymous_user_email',
+                'required' => true,
+                'attr' => ['max_length' => 255],
+                'mapped' => false,
+            ]
+        );
     }
 
     /**
@@ -109,7 +107,9 @@ class UrlType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Url::class]);
+        $resolver->setDefaults(
+            ['data_class' => Url::class],
+        );
     }
 
     /**

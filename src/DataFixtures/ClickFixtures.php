@@ -7,13 +7,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Click;
 use App\Entity\Url;
-use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
  * Class ClickFixtures.
- *
- * @psalm-suppress MissingConstructor
  */
 class ClickFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
@@ -25,7 +22,7 @@ class ClickFixtures extends AbstractBaseFixtures implements DependentFixtureInte
         $this->createMany(500, 'clicks', function (int $i) {
             $click = new Click();
             $click->setDate(
-                DateTimeImmutable::createFromMutable(
+                \DateTimeImmutable::createFromMutable(
                     $this->faker->dateTimeBetween('-100 days', '-1 days')
                 )
             );

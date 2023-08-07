@@ -2,9 +2,9 @@
 /**
  * Url repository.
  */
+
 namespace App\Repository;
 
-use App\Entity\Click;
 use App\Entity\Tag;
 use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -61,7 +61,7 @@ class UrlRepository extends ServiceEntityRepository
             ->leftJoin('url.tags', 'tags')
             ->groupBy('url.id')
             ->addGroupBy('tags')
-            ->orderBy('count', "DESC");
+            ->orderBy('count', 'DESC');
 
         return $this->applyFiltersToList($queryBuilder, $filters);
     }

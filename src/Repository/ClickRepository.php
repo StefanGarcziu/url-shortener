@@ -2,13 +2,12 @@
 /**
  * Click repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\Click;
 use App\Entity\Url;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -61,7 +60,7 @@ class ClickRepository extends ServiceEntityRepository
      *
      * @param Url $url Url
      *
-     * @return QueryBuilder
+     * @return QueryBuilder Query builder
      */
     public function queryByUrl(Url $url): QueryBuilder
     {

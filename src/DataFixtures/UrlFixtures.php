@@ -8,8 +8,6 @@ namespace App\DataFixtures;
 use App\Entity\AnonymousUser;
 use App\Entity\Tag;
 use App\Entity\Url;
-use DateTimeImmutable;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
@@ -26,10 +24,10 @@ class UrlFixtures extends AbstractBaseFixtures implements DependentFixtureInterf
             $url = new Url();
             $url->setLongUrl($this->faker->url());
             $url->setCreationDate(
-                DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
+                \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
             );
             $url->setModDate(
-                DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
+                \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
             );
 
             /** @var array<array-key, Tag> $tags */

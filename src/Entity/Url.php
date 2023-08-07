@@ -22,7 +22,7 @@ class Url
     /**
      * Id.
      *
-     * @var int|null
+     * @var int|null Id
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,7 +32,7 @@ class Url
     /**
      * Long url.
      *
-     * @var string|null
+     * @var string|null Long url
      */
     #[ORM\Column(length: 255)]
     #[Assert\Url]
@@ -42,7 +42,7 @@ class Url
     /**
      * Clicks.
      *
-     * @var Collection
+     * @var Collection Clicks
      */
     #[ORM\OneToMany(mappedBy: 'url', targetEntity: Click::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     #[Assert\Valid]
@@ -51,7 +51,7 @@ class Url
     /**
      * Creation date.
      *
-     * @var \DateTimeImmutable|null
+     * @var \DateTimeImmutable|null Date
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'create')]
@@ -61,7 +61,7 @@ class Url
     /**
      * Modification date.
      *
-     * @var \DateTimeImmutable|null
+     * @var \DateTimeImmutable|null Date
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'update')]
@@ -71,7 +71,7 @@ class Url
     /**
      * Tags.
      *
-     * @var Collection
+     * @var Collection Tags
      */
     #[Assert\Valid]
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
@@ -81,7 +81,7 @@ class Url
     /**
      * Anonymous user.
      *
-     * @var AnonymousUser|null
+     * @var AnonymousUser|null Anonymous user
      */
     #[ORM\ManyToOne(targetEntity: AnonymousUser::class)]
     private ?AnonymousUser $anonymousUser = null;
@@ -97,7 +97,7 @@ class Url
     /**
      * Getter for id.
      *
-     * @return int|null
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -107,7 +107,7 @@ class Url
     /**
      * Getter for long URL.
      *
-     * @return string|null
+     * @return string|null Url
      */
     public function getLongUrl(): ?string
     {
@@ -127,7 +127,7 @@ class Url
     /**
      * Getter for creation date.
      *
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable|null Date
      */
     public function getCreationDate(): ?\DateTimeImmutable
     {
@@ -137,7 +137,7 @@ class Url
     /**
      * Setter for creation date.
      *
-     * @param \DateTimeImmutable $creationDate
+     * @param \DateTimeImmutable $creationDate Date
      */
     public function setCreationDate(\DateTimeImmutable $creationDate): void
     {
@@ -147,7 +147,7 @@ class Url
     /**
      * Getter for modification date.
      *
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable|null Date
      */
     public function getModDate(): ?\DateTimeImmutable
     {
@@ -157,7 +157,7 @@ class Url
     /**
      * Setter for modification date.
      *
-     * @param \DateTimeImmutable $modDate
+     * @param \DateTimeImmutable $modDate Date
      */
     public function setModDate(\DateTimeImmutable $modDate): void
     {
@@ -165,7 +165,9 @@ class Url
     }
 
     /**
-     * @return Collection
+     * Get clicks.
+     *
+     * @return Collection Clicks
      */
     public function getClicks(): Collection
     {
@@ -173,7 +175,9 @@ class Url
     }
 
     /**
-     * @param Collection $clicks
+     * Set clicks.
+     *
+     * @param Collection $clicks Clicks
      */
     public function setClicks(Collection $clicks): void
     {
@@ -183,7 +187,7 @@ class Url
     /**
      * Get tags.
      *
-     * @return Collection<int, Tag>
+     * @return Collection<int, Tag> Tags
      */
     public function getTags(): Collection
     {
@@ -193,7 +197,7 @@ class Url
     /**
      * Add tag.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag
      */
     public function addTag(Tag $tag): void
     {
@@ -205,22 +209,30 @@ class Url
     /**
      * Remove tag.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag
      */
     public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
     }
 
+    /**
+     * Getter for anonymous user.
+     *
+     * @return AnonymousUser|null User
+     */
     public function getAnonymousUser(): ?AnonymousUser
     {
         return $this->anonymousUser;
     }
 
-    public function setAnonymousUser(?AnonymousUser $anonymousUser): static
+    /**
+     * Setter for anonymous user.
+     *
+     * @param AnonymousUser|null $anonymousUser User
+     */
+    public function setAnonymousUser(?AnonymousUser $anonymousUser): void
     {
         $this->anonymousUser = $anonymousUser;
-
-        return $this;
     }
 }

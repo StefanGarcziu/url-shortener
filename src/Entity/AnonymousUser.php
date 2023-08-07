@@ -19,7 +19,7 @@ class AnonymousUser
     /**
      * Id.
      *
-     * @var int|null
+     * @var int|null Id
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,7 +29,7 @@ class AnonymousUser
     /**
      * Email.
      *
-     * @var string|null
+     * @var string|null Email
      */
     #[ORM\Column(length: 255)]
     #[Assert\Email]
@@ -39,7 +39,7 @@ class AnonymousUser
     /**
      * Getter for id.
      *
-     * @return int|null
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -49,7 +49,7 @@ class AnonymousUser
     /**
      * Getter for email.
      *
-     * @return string|null
+     * @return string|null Email
      */
     public function getEmail(): ?string
     {

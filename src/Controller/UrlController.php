@@ -6,16 +6,12 @@
 namespace App\Controller;
 
 use App\Entity\AnonymousUser;
-use App\Entity\Click;
 use App\Entity\Url;
 use App\Form\Type\UrlType;
-use App\Repository\ClickRepository;
-use App\Repository\UrlRepository;
 use App\Service\AnonymousUserServiceInterface;
 use App\Service\ClickServiceInterface;
 use App\Service\TagServiceInterface;
 use App\Service\UrlServiceInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -72,7 +68,7 @@ class UrlController extends AbstractController
         $this->tagService = $tagService;
         $this->anonymousUserService = $anonymousUserService;
     }
-    
+
     /**
      * Index action.
      *
@@ -94,7 +90,7 @@ class UrlController extends AbstractController
 
         return $this->render(
             'url/index.html.twig',
-            ['pagination' => $pagination, 'filter' =>  $tagFilterTitle ]
+            ['pagination' => $pagination, 'filter' => $tagFilterTitle]
         );
     }
 
@@ -146,8 +142,8 @@ class UrlController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request  $request  HTTP request
-     * @param Url $url Url entity
+     * @param Request $request HTTP request
+     * @param Url     $url     Url entity
      *
      * @return Response HTTP response
      */
@@ -198,8 +194,8 @@ class UrlController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
-     * @param Url $url Url entity
+     * @param Request $request HTTP request
+     * @param Url     $url     Url entity
      *
      * @return Response HTTP response
      */
@@ -270,7 +266,7 @@ class UrlController extends AbstractController
     {
         $pagination = $this->clickService->getPaginatedListByUrl(
             $request->query->getInt('page', 1),
-            $url
+            $url,
         );
 
         return $this->render(

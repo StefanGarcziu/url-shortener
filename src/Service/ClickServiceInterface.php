@@ -17,10 +17,10 @@ interface ClickServiceInterface
     /**
      * Register click.
      *
-     * @param Url $url Url
-     * @param string $ip IP
+     * @param Url    $url Url
+     * @param string $ip  IP
      *
-     * @return Click
+     * @return Click Click
      */
     public function registerClick(Url $url, string $ip): Click;
 

@@ -18,7 +18,7 @@ class Tag
     /**
      * Id.
      *
-     * @var int|null
+     * @var int|null Id
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,7 +28,7 @@ class Tag
     /**
      * Title.
      *
-     * @var string|null
+     * @var string|null Title
      */
     #[ORM\Column(length: 45)]
     private ?string $title = null;
@@ -36,7 +36,7 @@ class Tag
     /**
      * Getter for ID.
      *
-     * @return int|null
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -46,7 +46,7 @@ class Tag
     /**
      * Getter for title.
      *
-     * @return string|null
+     * @return string|null Title
      */
     public function getTitle(): ?string
     {

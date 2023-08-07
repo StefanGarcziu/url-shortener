@@ -20,7 +20,7 @@ class Click
     /**
      * Id.
      *
-     * @var int|null
+     * @var int|null Id
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,7 +30,7 @@ class Click
     /**
      * Click date.
      *
-     * @var \DateTimeImmutable|null
+     * @var \DateTimeImmutable|null Date
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'create')]
@@ -40,7 +40,7 @@ class Click
     /**
      * Ip.
      *
-     * @var string|null
+     * @var string|null Ip
      */
     #[ORM\Column(length: 255)]
     #[Assert\Ip]
@@ -53,7 +53,7 @@ class Click
     /**
      * Getter for id.
      *
-     * @return int|null
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -63,7 +63,7 @@ class Click
     /**
      * Getter for click date.
      *
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable|null Date
      */
     public function getDate(): ?\DateTimeImmutable
     {
@@ -83,7 +83,7 @@ class Click
     /**
      * Getter for IP.
      *
-     * @return string|null
+     * @return string|null Ip
      */
     public function getIp(): ?string
     {
@@ -100,15 +100,23 @@ class Click
         $this->ip = $ip;
     }
 
+    /**
+     * Getter for url.
+     *
+     * @return Url|null Url
+     */
     public function getUrl(): ?Url
     {
         return $this->url;
     }
 
-    public function setUrl(?Url $url): static
+    /**
+     * Setter for url.
+     *
+     * @param Url|null $url Url
+     */
+    public function setUrl(?Url $url): void
     {
         $this->url = $url;
-
-        return $this;
     }
 }

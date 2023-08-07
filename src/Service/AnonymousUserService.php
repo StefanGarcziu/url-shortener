@@ -7,9 +7,6 @@ namespace App\Service;
 
 use App\Entity\AnonymousUser;
 use App\Repository\AnonymousUserRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class AnonymousUserService.
@@ -46,7 +43,7 @@ class AnonymousUserService implements AnonymousUserServiceInterface
      *
      * @param string $email Email
      *
-     * @return AnonymousUser|null
+     * @return AnonymousUser|null User
      */
     public function findOneByEmail(string $email): ?AnonymousUser
     {

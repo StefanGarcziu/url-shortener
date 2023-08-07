@@ -6,7 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\AnonymousUser;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
  * Class AnonymousUserFixtures.

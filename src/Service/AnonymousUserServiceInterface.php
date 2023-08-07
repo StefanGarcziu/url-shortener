@@ -6,7 +6,6 @@
 namespace App\Service;
 
 use App\Entity\AnonymousUser;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * Interface AnonymousUserServiceInterface.
@@ -23,9 +22,9 @@ interface AnonymousUserServiceInterface
     /**
      * Find user by email.
      *
-     * @param string $email
+     * @param string $email Email
      *
-     * @return AnonymousUser|null
+     * @return AnonymousUser|null User
      */
     public function findOneByEmail(string $email): ?AnonymousUser;
 }

@@ -8,8 +8,6 @@ namespace App\Service;
 use App\Entity\Click;
 use App\Entity\Url;
 use App\Repository\ClickRepository;
-use App\Repository\UrlRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -18,11 +16,6 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class ClickService implements ClickServiceInterface
 {
-    /**
-     * Url repository.
-     */
-    private UrlRepository $urlRepository;
-
     /**
      * Click repository.
      */
@@ -33,13 +26,14 @@ class ClickService implements ClickServiceInterface
      */
     private PaginatorInterface $paginator;
 
-
     /**
      * Constructor.
+     *
+     * @param ClickRepository    $clickRepository Click repository
+     * @param PaginatorInterface $paginator       Paginator
      */
-    public function __construct(UrlRepository $urlRepository, ClickRepository $clickRepository, PaginatorInterface $paginator)
+    public function __construct(ClickRepository $clickRepository, PaginatorInterface $paginator)
     {
-        $this->urlRepository = $urlRepository;
         $this->clickRepository = $clickRepository;
         $this->paginator = $paginator;
     }
@@ -47,10 +41,10 @@ class ClickService implements ClickServiceInterface
     /**
      * Register click.
      *
-     * @param Url $url
-     * @param string $ip
+     * @param Url    $url URL
+     * @param string $ip  IP
      *
-     * @return Click
+     * @return Click Click
      */
     public function registerClick(Url $url, string $ip): Click
     {

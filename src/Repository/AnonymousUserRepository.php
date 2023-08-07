@@ -2,6 +2,7 @@
 /**
  * Anonymous user repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\AnonymousUser;
