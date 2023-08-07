@@ -1,6 +1,6 @@
 <?php
 /**
- * Album service.
+ * User service.
  */
 
 namespace App\Service;

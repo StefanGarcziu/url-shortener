@@ -30,7 +30,7 @@ final class Version20230805084223 extends AbstractMigration
         $this->addSql('ALTER TABLE urls ADD CONSTRAINT FK_2A9437A152656F32 FOREIGN KEY (anonymous_user_id) REFERENCES anonymous_users (id)');
         $this->addSql('ALTER TABLE urls_tags ADD CONSTRAINT FK_87534E0781CFDAE7 FOREIGN KEY (url_id) REFERENCES urls (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE urls_tags ADD CONSTRAINT FK_87534E07BAD26311 FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE');
-        $this->addSql('DROP TABLE url');
+//        $this->addSql('DROP TABLE url');
     }
 
     public function down(Schema $schema): void
