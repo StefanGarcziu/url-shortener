@@ -46,9 +46,16 @@ class Click
     #[Assert\Ip]
     private ?string $ip = null;
 
-    #[ORM\ManyToOne(targetEntity: Url::class)]
+//    #[ORM\ManyToOne(targetEntity: Url::class)]
+//    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+//    private ?Url $url = null;
+
+    #[ORM\ManyToOne(targetEntity: Url::class, inversedBy: "clicks")]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Url $url = null;
+
+
+///
 
     /**
      * Getter for id.
