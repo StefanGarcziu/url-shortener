@@ -83,66 +83,66 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    /**
-     * Change password action.
-     *
-     * @param Request                     $request            Request
-     * @param UserPasswordHasherInterface $userPasswordHasher Hasher
-     *
-     * @return Response Response
-     */
-    #[Route(
-        '/user-edit',
-        name: 'user_edit',
-        methods: 'GET|POST'
-    )]
-    #[IsGranted('ROLE_ADMIN')]
-    public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $form = $this->createForm(ChangeUserDataType::class);
-        $form->get('name')->setData($user->getName());
-        $form->get('surname')->setData($user->getSurname());
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $oldPassword = $form->get('oldPassword')->getData();
-            if (!$userPasswordHasher->isPasswordValid($user, $oldPassword)) {
-                $this->addFlash(
-                    'danger',
-                    $this->translator->trans('message.wrong_password')
-                );
-
-                return $this->redirectToRoute('user_edit');
-            }
-
-            $encodedPassword = $userPasswordHasher->hashPassword(
-                $user,
-                $form->get('password')->getData()
-            );
-
-            $this->userService->upgradePassword($user, $encodedPassword);
-            $user->setName($form->get('name')->getData());
-            $user->setSurname($form->get('surname')->getData());
-            $this->userService->save($user);
-
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.user_data_updated')
-            );
-
-            return $this->redirectToRoute('user_edit');
-        }
-
-        return $this->render(
-            'security/change_user_data.html.twig',
-            [
-                'form' => $form->createView(),
-                'user' => $user,
-            ]
-        );
-    }
+//    /**
+//     * Change password action.
+//     *
+//     * @param Request                     $request            Request
+//     * @param UserPasswordHasherInterface $userPasswordHasher Hasher
+//     *
+//     * @return Response Response
+//     */
+//    #[Route(
+//        '/user-edit',
+//        name: 'user_edit',
+//        methods: 'GET|POST'
+//    )]
+//    #[IsGranted('ROLE_ADMIN')]
+//    public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+//    {
+//        /** @var User $user */
+//        $user = $this->getUser();
+//
+//        $form = $this->createForm(ChangeUserDataType::class);
+//        $form->get('name')->setData($user->getName());
+//        $form->get('surname')->setData($user->getSurname());
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $oldPassword = $form->get('oldPassword')->getData();
+//            if (!$userPasswordHasher->isPasswordValid($user, $oldPassword)) {
+//                $this->addFlash(
+//                    'danger',
+//                    $this->translator->trans('message.wrong_password')
+//                );
+//
+//                return $this->redirectToRoute('user_edit');
+//            }
+//
+//            $encodedPassword = $userPasswordHasher->hashPassword(
+//                $user,
+//                $form->get('password')->getData()
+//            );
+//
+//            $this->userService->upgradePassword($user, $encodedPassword);
+//            $user->setName($form->get('name')->getData());
+//            $user->setSurname($form->get('surname')->getData());
+//            $this->userService->save($user);
+//
+//            $this->addFlash(
+//                'success',
+//                $this->translator->trans('message.user_data_updated')
+//            );
+//
+//            return $this->redirectToRoute('user_edit');
+//        }
+//
+//        return $this->render(
+//            'security/change_user_data.html.twig',
+//            [
+//                'form' => $form->createView(),
+//                'user' => $user,
+//            ]
+//        );
+//    }
 
     /**
      * Change name and surname action.
