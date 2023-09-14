@@ -37,16 +37,13 @@ class SecurityControllerTest extends WebTestCase
         $expectedStatusCode = 302;
 
         // when
-        $this->httpClient->request('GET', '/user-edit');
+        $this->httpClient->request('GET', '/user-edit-name-surname'); // Обновить маршрут на /user-edit-name-surname
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
         $this->assertEquals(302, $resultStatusCode);
     }
 
-    /**
-     * Test index route for admin user.
-     */
     public function testSecurityRouteLogged(): void
     {
         // given
@@ -69,7 +66,7 @@ class SecurityControllerTest extends WebTestCase
         $this->httpClient->loginUser($user);
 
         // when
-        $this->httpClient->request('GET', '/user-edit');
+        $this->httpClient->request('GET', '/user-edit-name-surname'); // Обновить маршрут на /user-edit-name-surname
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
