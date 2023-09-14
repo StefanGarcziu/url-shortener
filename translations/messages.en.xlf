@@ -30,6 +30,10 @@
 			<source>action_logout</source>
 			<target>logout</target>
 		</trans-unit>
+		<trans-unit id="action.logout">
+			<source>action.logout</source>
+			<target>logout</target>
+		</trans-unit>
 		<trans-unit id="action_login">
 			<source>action_login</source>
 			<target>login</target>
@@ -209,6 +213,40 @@
 		<trans-unit id="action.sign_in">
 			<source>action.sign_in</source>
 			<target>sign in</target>
+		</trans-unit>
+
+		<trans-unit id="Name">
+			<source>Name</source>
+			<target>Name</target>
+		</trans-unit>
+		<trans-unit id="Surname">
+			<source>Surname</source>
+			<target>Surname</target>
+		</trans-unit>
+
+		<trans-unit id=" title.change_password ">
+			<source>title.change_password</source>
+			<target>Change Password</target>
+		</trans-unit>
+		<trans-unit id="action.back">
+			<source>action.back</source>
+			<target>Back</target>
+		</trans-unit>
+		<trans-unit id="message.name_surname_updated">
+			<source>message.name_surname_updated</source>
+			<target>Name and Surname updated</target>
+		</trans-unit>
+		<trans-unit id="message.password_updated">
+			<source>message.password_updated</source>
+			<target>Password updated</target>
+		</trans-unit>
+		<trans-unit id="user_edit_name_surname">
+			<source>user_edit_name_surname</source>
+			<target>Edit name surname</target>
+		</trans-unit>
+		<trans-unit id="user_edit_password">
+			<source>user_edit_password</source>
+			<target>Edit password</target>
 		</trans-unit>
     </body>
   </file>
