@@ -12,7 +12,10 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_edit') }}">{{ 'nav.user_edit'|trans }}</a>
+                        <a class="nav-link" href="{{ path('user_edit_name_surname') }}">{{ 'user_edit_name_surname'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_edit_password') }}">{{ 'user_edit_password'|trans }}</a>
                     </li>
                 {% endif %}
             </ul>
