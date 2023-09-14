@@ -7,6 +7,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\ChangeUserDataType;
+
+use App\Form\Type\ChangeNameSurnameType;
+use App\Form\Type\ChangePasswordType;
+
 use App\Service\UserServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -139,4 +143,105 @@ class SecurityController extends AbstractController
             ]
         );
     }
+
+    /**
+     * Change name and surname action.
+     *
+     * @param Request $request Request
+     *
+     * @return Response Response
+     */
+    #[Route(
+        '/user-edit-name-surname',
+        name: 'user_edit_name_surname',
+        methods: 'GET|POST'
+    )]
+    #[IsGranted('ROLE_USER')]
+    public function editNameSurname(Request $request): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(ChangeNameSurnameType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userService->save($user);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.name_surname_updated')
+            );
+
+            return $this->redirectToRoute('user_edit_name_surname');
+        }
+
+        return $this->render(
+            'security/change_name_surname.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+    }
+
+
+    /**
+     * Change password action.
+     *
+     * @param Request                     $request            Request
+     * @param UserPasswordHasherInterface $userPasswordHasher Hasher
+     *
+     * @return Response Response
+     */
+    #[Route(
+        '/user-edit-password',
+        name: 'user_edit_password',
+        methods: 'GET|POST'
+    )]
+    #[IsGranted('ROLE_USER')]
+    public function editPassword(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $oldPassword = $form->get('oldPassword')->getData();
+            if (!$userPasswordHasher->isPasswordValid($user, $oldPassword)) {
+                $this->addFlash(
+                    'danger',
+                    $this->translator->trans('message.wrong_password')
+                );
+
+                return $this->redirectToRoute('user_edit_password');
+            }
+
+            $encodedPassword = $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            );
+
+            $this->userService->upgradePassword($user, $encodedPassword);
+            $this->userService->save($user);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.password_updated')
+            );
+
+            return $this->redirectToRoute('user_edit_password');
+        }
+
+        return $this->render(
+            'security/change_password.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+    }
+
 }
